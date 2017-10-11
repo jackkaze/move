@@ -1,6 +1,3 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
@@ -69,10 +66,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
     </div>
   </div>
-  <div id="loading_bar" style="display:none;"><img src="<?php echo IMAGE_WWW_IMAGES;?>ajax-loader-bar.gif" /></div>
   <nav class="navbar fixed-bottom navbar-light bg-faded center">
-     <a class="navbar-brand" href="<?php echo HTML_HREF_HOME;?>">© JackLin site</a>
+     <span class="color_black">© JackLin site</span>
   </nav>
-  <script src="<?php echo JS_WWW_JS;?>placeholders.min.js"></script>
 </body>
 </html>

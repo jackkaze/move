@@ -9,8 +9,8 @@
   	public function __construct()
     {
       parent::__construct();
-      //$this->load->helper('common');
       $this->lang->load('common', 'chinese');
+      $this->load->model('Common_crypt_model', 'common_crypt');
       $this->_content['session']['login_status'] = 'N';
       $this->_content['session']['login_type'] = 0;
       $this->_content['session']['login_sn'] = NULL;
@@ -21,15 +21,17 @@
   			$this->_content['session']['login_status'] = $session_array['logged_in'];
   			if(isset($session_array['login_type']))
         {
-  				$this->_content['session']['login_type'] = $session_array['login_type'];
+          $type = $this->common_crypt->decrypt($session_array['login_type']);
+  				$this->_content['session']['login_type'] = $type;
   			}
   			if(isset($session_array['login_sn']))
         {
-          if (!$this->input->is_ajax_request() && $session_array['login_sn'] == '1')
+          $sn = $this->common_crypt->decrypt($session_array['login_sn']);
+          if (!$this->input->is_ajax_request() && $sn == '1')
           {
             //$this->output->enable_profiler(TRUE);
           }
-  				$this->_content['session']['login_sn'] = $session_array['login_sn'];
+  				$this->_content['session']['login_sn'] = $sn;
   			}
   		}
 
@@ -44,8 +46,8 @@
                                             '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">',
                                             '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">',
                                             '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">',
-                                            '<link rel="stylesheet" href="/www/css/normalize.css">',
-                                            '<link rel="stylesheet" href="/www/css/style.css">'
+                                            '<link rel="stylesheet" href="/css/normalize.css">',
+                                            '<link rel="stylesheet" href="/css/style.css">'
 
       );
       $this->_content['common_js'] = array('<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>',
@@ -70,7 +72,7 @@
       if(in_array($login_type, array(1, 2, 3)))
       {
         $show_link_array[] = '<li class="nav-item base_border dropdown">';
-        $show_link_array[] = '<a class="nav-link dropdown-toggle" href="'.HTML_HREF_GUEST.'" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$this->lang->line('common_title_guest').'</a>';
+        $show_link_array[] = '<a class="nav-link dropdown-toggle" href="'.HTML_HREF_GUEST.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$this->lang->line('common_title_guest').'</a>';
         $show_link_array[] = '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
         $show_link_array[] = '<a class="dropdown-item" href="'.HTML_HREF_GUEST.'">'.$this->lang->line('common_title_sub_guest_price').'</a>';
         $show_link_array[] = '<a class="dropdown-item" href="'.HTML_HREF_GUEST_CREATE.'">'.$this->lang->line('common_title_sub_guest_add').'</a>';
@@ -98,7 +100,7 @@
       if($login_type == '1')
       {
         $master_show_link_array[] = '<li class="nav-item base_border dropdown">';
-        $master_show_link_array[] = '<a class="nav-link dropdown-toggle" href="/www/Guest/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$this->lang->line('common_title_admin').'</a>';
+        $master_show_link_array[] = '<a class="nav-link dropdown-toggle" href="'.HTML_HREF_MEMO.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$this->lang->line('common_title_admin').'</a>';
         $master_show_link_array[] = '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
         $master_show_link_array[] = '<a class="nav-link" href="'.HTML_HREF_MEMO.'">'.$this->lang->line('common_title_memo').'</a>';
         $master_show_link_array[] = '<a class="nav-link" href="'.HTML_HREF_ACCOUNT.'">'.$this->lang->line('common_title_account').'</a>';

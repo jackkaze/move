@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://jackkaze.byethost16.com/www/';
+$config['base_url'] = 'https://www.jackkaze.info/';
 
 /*
 |--------------------------------------------------------------------------
@@ -324,7 +324,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = hex2bin('6e2bd0ae5d7fc29e8e6feb49cd827b66f16cc7114c4906dda6e35e58aba8a34c');
 
 /*
 |--------------------------------------------------------------------------
@@ -448,7 +448,11 @@ $config['global_xss_filtering'] = true;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection'] = TRUE;
+if (stripos($_SERVER["REQUEST_URI"],'/Api_phonegap') === FALSE) {
+	$config['csrf_protection'] 	= TRUE;
+}else{
+	$config['csrf_protection'] 	= FALSE; 
+}
 $config['csrf_token_name'] = 'csrf_token_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;

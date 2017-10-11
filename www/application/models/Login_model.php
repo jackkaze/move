@@ -3,7 +3,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Login_model extends MY_Model{
   public function __construct() {
-    $this->load->library('Encrypt', 'encrypt');
+    parent::__construct();
   }
   
   //取得指定條件的素材資料
@@ -16,18 +16,21 @@ class Login_model extends MY_Model{
     $sql_result = $this->get_all_result($query);
     if(isset($sql_result['count']) && $sql_result['count'] > 0){
       $form_password = $form_array['password'];
-      $correct_password = $this->encrypt->decode($sql_result['data'][0]['password']);
-      //echo $form_password.'<br />'.$correct_password;
-      if($form_password == $correct_password){
+      $correct_password = $sql_result['data'][0]['password'];
+      if(password_verify($form_password, $correct_password)){
+        $sn = $sql_result['data'][0]['sn'];
+        $encrypt_sn = $this->common_crypt->encrypt($sn);
+        $type = $sql_result['data'][0]['type'];
+        $encrypt_type = $this->common_crypt->encrypt($type);
         $newdata = array(
                          'logged_in' => TRUE,
-                         'login_type' => $sql_result['data'][0]['type'],
-                         'login_sn' => $sql_result['data'][0]['sn']
+                         'login_type' => $encrypt_type,
+                         'login_sn' => $encrypt_sn
         );
 
         $this->session->set_userdata($newdata);
         $data = array('last_logined' => date("Y-m-d H:i:s"));
-        $where = array('sn' => $sql_result['data'][0]['sn']);
+        $where = array('sn' => $sn);
         $this->_update($data, $where);
         return true;
       }

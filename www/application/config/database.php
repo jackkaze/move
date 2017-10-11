@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
   'dsn'  => '',
-  'hostname' => 'sql302.byethost16.com',
-  'username' => 'b16_20384709',
-  'password' => 'allen392022',
-  'database' => 'b16_20384709_jackkaze',
+  'hostname' => 'localhost',
+  'username' => 'jackkaze_dump',
+  'password' => 'dump@392022',
+  'database' => 'jackkaze_wedding_database',
   'dbdriver' => 'mysqli',
   'dbprefix' => '',
   'pconnect' => FALSE,
