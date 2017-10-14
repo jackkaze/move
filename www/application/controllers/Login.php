@@ -36,13 +36,15 @@
         }
       }
       $result['account'] = $form_array['account'];
+      $result['ip_address'] = $this->input->ip_address();
+      
       $tmp_result = json_encode($result);
-      $mail_list = array('jackkaze@gmail.com');
-      $subject = __CLASS__ .'_'. __FUNCTION__;
-      $content = $tmp_result;
+      $config['mail_list'] = array('jackkaze@gmail.com');
+      $config['subject'] = __CLASS__ .'_'. __FUNCTION__;
+      $config['content'] = $tmp_result;
       //$new_Files = array('./images/add.png', './images/alpha.png');
-      $new_Files = false;
-      $this->common_mail->send_mail($mail_list, $subject, $content, $new_Files);
+      $config['file_attach'] = false;
+      $this->common_mail->send_mail($config);
       echo $tmp_result;
       exit;
     }

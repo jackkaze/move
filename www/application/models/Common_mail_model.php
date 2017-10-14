@@ -7,28 +7,31 @@ class Common_mail_model extends MY_Model{
     $this->load->library('email');
   }
   
-  public function send_mail($to = "jackkaze@gmail.com", $subject = "subject", $content = "content", $file = false)
+  //mail_list, subject, content, file_attach
+  public function send_mail($config = array())
   {
-    $mail_set = $this->config->item('mail_set');
-    $this->email->from($mail_set['from'], $mail_set['from_name']);
-    $this->email->to($to); 
-    $this->email->cc($mail_set['cc']);
-    $this->email->subject($subject);
-    $this->email->message($content); 
-    if($file)
-    {
-      if(is_array($file))
+    if(isset($config['mail_list']) && isset($config['subject']) && isset($config['content'])){
+      $mail_set = $this->config->item('mail_set');
+      $this->email->from($mail_set['from'], $mail_set['from_name']);
+      $this->email->to($config['mail_list']); 
+      $this->email->cc($mail_set['cc']);
+      $this->email->subject($config['subject']);
+      $this->email->message($config['content']); 
+      if(isset($config['file_attach']) && $config['file_attach'])
       {
-        foreach ($file as $key => $value)
-        { 
-          $this->email->attach($value);
+        if(is_array($config['file_attach']))
+        {
+          foreach ($config['file_attach'] as $key => $value)
+          { 
+            $this->email->attach($value);
+          }
+        }
+        else
+        {
+          $this->email->attach($config['file_attach']);
         }
       }
-      else
-      {
-        $this->email->attach($file);
-      }
+      $this->email->send();
     }
-    $this->email->send();
   }
 }

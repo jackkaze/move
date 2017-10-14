@@ -31,7 +31,7 @@
 
   $config['jacklin'] = array();
   $config['mail_set'] = array("bcc" => "jackkaze@yahoo.com.tw",
-                                 "cc" => "jackkaze@yahoo.com.tw",
-                                 "from" => "root@sv78.ifastnet.com",
-                                 "from_name" => "root@sv78.ifastnet.com"
+                               "cc" => "jackkaze@yahoo.com.tw",
+                               "from" => "root@sv78.ifastnet.com",
+                               "from_name" => "root@sv78.ifastnet.com"
                              );
