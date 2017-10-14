@@ -1,2 +1,2 @@
 #!/bin/bash
-find ./dump/ -name "db_*.sql" -mtime +7 -exec rm -rf {};
+find ./dump -mtime +5 -name "db_*.sql" -exec rm -rf {} \;

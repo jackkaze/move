@@ -35,11 +35,13 @@
           );
         }
       }
+      $result['account'] = $form_array['account'];
       $tmp_result = json_encode($result);
       $mail_list = array('jackkaze@gmail.com');
       $subject = __CLASS__ .'_'. __FUNCTION__;
       $content = $tmp_result;
-      $new_Files = array('./images/add.png', './images/alpha.png');
+      //$new_Files = array('./images/add.png', './images/alpha.png');
+      $new_Files = false;
       $this->common_mail->send_mail($mail_list, $subject, $content, $new_Files);
       echo $tmp_result;
       exit;
